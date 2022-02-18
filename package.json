@@ -1,0 +1,22 @@
+{
+  "name": "js-pimcore-toolbox",
+  "version": "1.0.0-alpha.1",
+  "description": "Dependency free js plugins for Pimcore Toolbox",
+  "author": "DACHCOM.DIGITAL",
+  "license": "GPL-3.0-or-later",
+  "main": "src/js/toolbox.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dachcom-digital/js-pimcore-formbuilder.git"
+  },
+  "bugs": {
+    "url": "https://github.com/dachcom-digital/js-pimcore-toolbox/issues"
+  },
+  "homepage": "https://github.com/dachcom-digital/js-pimcore-toolbox",
+  "directories": {
+    "doc": "docs"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  }
+}

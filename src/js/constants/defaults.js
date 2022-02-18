@@ -1,4 +1,4 @@
-export const GOOGLE_OPT_OUT_LINK = {
+export const GOOGLE_OPT_OUT_LINK_DEFAULTS = {
     editmode: false,
     notify: null
 }

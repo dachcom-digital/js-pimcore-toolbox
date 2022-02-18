@@ -1,11 +1,11 @@
-import {GOOGLE_OPT_OUT_LINK} from '../constants/defaults';
+import {GOOGLE_OPT_OUT_LINK_DEFAULTS} from '../constants/defaults';
 import {isFunction} from '../utils/helpers';
 
 export default class GoogleOptOutLink {
 
     constructor(element, options = {}) {
         this.translations = window['toolboxJsFrontend'] ? window['toolboxJsFrontend']['translations'] : {};
-        this.options = Object.assign(GOOGLE_OPT_OUT_LINK, options);
+        this.options = Object.assign(GOOGLE_OPT_OUT_LINK_DEFAULTS, options);
         this.editMode = this.options.editmode;
 
         if (this.editMode) {

@@ -19,7 +19,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 ## Extended Usage
 
-```javascript
+```js
 new GoogleOptOutLink(el, {
     editmode: false,
     notify: function (message) {

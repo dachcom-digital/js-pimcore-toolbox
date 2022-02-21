@@ -57,11 +57,8 @@ export default class GoogleMaps {
             });
         }
 
-        // todo
-        this.checkElementEnvironment();
-
         if (this.options.centerMapOnResize === true) {
-            window.addEventListener('resize.toolbox.googleMap', (ev) => this.checkResizeContext(ev));
+            window.addEventListener('resize.toolbox.googleMap', () => this.resize());
         }
     }
 
@@ -93,26 +90,34 @@ export default class GoogleMaps {
                 content: '<div class="info-window"><div class="loading"></div></div>',
             });
 
-            marker.addListener('click', function () {
+            marker.addListener('click', () => {
                 infoWindow.open(this.mapInstance, marker);
-                if (marker.contentLoaded === false) {
 
-                    const data = new FormData();
-                    data.append('language', HTMLElement.lang);
-                    // todo: submit location
-                    data.append('mapParams', '');
+                const data = new URLSearchParams();
+                let language = document.documentElement.lang;
+
+                data.append('language', language);
+                Object.entries(location).forEach(([k, v]) => {
+                    data.append(`mapParams[${k}]`, String(v));
+                });
+
+
+                if (marker.contentLoaded === false) {
 
                     fetch('/toolbox/ajax/gm-info-window', {
                         method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/x-www-form-urlencoded',
+                        },
                         body: data,
                     })
                         .catch((error) => {
                             console.error('toolbox error: fetching info window');
                         })
-                        .then(response => response.json())
+                        .then(response => response.text())
                         .then((data) => {
                             marker.contentLoaded = true;
-                            infoWindow.setContent(data.responseText);
+                            infoWindow.setContent(data);
                             this.mapInstance.setCenter(marker.getPosition());
                         });
                 }
@@ -124,37 +129,7 @@ export default class GoogleMaps {
         }
     }
 
-    checkElementEnvironment() {
-
-        // todo: use methods?
-
-        // var _ = this;
-        //
-        // // special treatment for a re-init map inside accordion and tabs
-        // if (this.options.theme === 'bootstrap3' || this.options.theme === 'bootstrap4') {
-        //     $(document).on('shown.bs.collapse', function (ev) {
-        //         var $target = $(ev.target);
-        //         if ($target && $.contains($target[0], _.$map[0])) {
-        //             var x = _.mapInstance.getZoom(),
-        //                 c = _.mapInstance.getCenter();
-        //             google.maps.event.trigger(_.mapInstance, 'resize');
-        //             _.mapInstance.setZoom(x);
-        //             _.mapInstance.setCenter(c);
-        //         }
-        //     }).on('shown.bs.tab shown-tabs.bs.tab-collapse', function (ev) {
-        //         var $target = $($(ev.target).attr('href'));
-        //         if ($target && $.contains($target[0], _.$map[0])) {
-        //             var x = _.mapInstance.getZoom(),
-        //                 c = _.mapInstance.getCenter();
-        //             google.maps.event.trigger(_.mapInstance, 'resize');
-        //             _.mapInstance.setZoom(x);
-        //             _.mapInstance.setCenter(c);
-        //         }
-        //     });
-        // }
-    }
-
-    checkResizeContext(ev) {
+    resize() {
         const x = this.mapInstance.getZoom(),
             c = this.mapInstance.getCenter();
         google.maps.event.trigger(this.mapInstance, 'resize');

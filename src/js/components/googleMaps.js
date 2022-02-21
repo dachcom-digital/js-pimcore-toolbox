@@ -56,10 +56,6 @@ export default class GoogleMaps {
                 google.maps.event.removeListener(listener);
             });
         }
-
-        if (this.options.centerMapOnResize === true) {
-            window.addEventListener('resize.toolbox.googleMap', () => this.resize());
-        }
     }
 
     isValidLocation(location) {
@@ -87,7 +83,7 @@ export default class GoogleMaps {
         if (location.hideInfoWindow !== true) {
 
             infoWindow = new google.maps.InfoWindow({
-                content: '<div class="info-window"><div class="loading"></div></div>',
+                content: this.options.emptyInfoWindowHtml,
             });
 
             marker.addListener('click', () => {

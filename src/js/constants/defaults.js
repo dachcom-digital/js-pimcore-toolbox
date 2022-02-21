@@ -1,6 +1,5 @@
 export const GOOGLE_MAPS_DEFAULTS = {
-    centerMapOnResize: true,
-    theme: 'todo! use classes.' // todo: delete theme, use method!
+    emptyInfoWindowHtml: '<div class="info-window"><div class="loading"></div></div>',
 }
 
 export const GOOGLE_OPT_OUT_LINK_DEFAULTS = {

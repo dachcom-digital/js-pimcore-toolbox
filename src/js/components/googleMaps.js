@@ -56,6 +56,7 @@ export default class GoogleMaps {
                 google.maps.event.removeListener(listener);
             });
         }
+
     }
 
     isValidLocation(location) {

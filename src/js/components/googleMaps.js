@@ -34,9 +34,9 @@ export default class GoogleMaps {
         latLngBounds = new google.maps.LatLngBounds();
 
         if (isString(mapStyleUrl)) {
-            fetch(mapStyleUrl).then((json) => {
-                this.mapInstance.set('styles', json);
-            });
+            fetch(mapStyleUrl)
+                .then(response => response.json())
+                .then(json => this.mapInstance.set('styles', json));
         }
 
         if (locations.length > 0) {
